@@ -1,7 +1,7 @@
 
 <?php 
-include 'parsing.php';
-include 'vkapi.php';
+include 'libraries/parsing.php';
+include 'libraries/vkapi.php';
 
 
 if (!isset($_REQUEST)) { 

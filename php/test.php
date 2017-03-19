@@ -1,7 +1,7 @@
 <?php 
 //Подключаем библиотеки
-include 'parsing.php';
-include 'vkapi.php';
+include 'libraries/parsing.php';
+include 'libraries/vkapi.php';
 /* $mysqli = new mysqli('localhost', 'cw44342_botvk', '12345qwe','cw44342_botvk');
 $res = $mysqli->query("SELECT MAX(id) FROM vocabulary");
 $row = $res->fetch_assoc(); */

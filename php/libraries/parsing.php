@@ -1,5 +1,5 @@
 <?php
-//Парсим случайное слово
+//РџСЂРёРІРµС‚
 include 'simple_html_dom.php';
 class Parsing
 {
