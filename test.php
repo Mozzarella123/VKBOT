@@ -21,5 +21,6 @@ $api = new UserMethods($token);
 		"file1" => $img_src,
 		);
 		$api->UploadImageToAlbum($post_params,243751267,142367703);
+  echo 'lol';
   echo $request;
   echo $img_src;
