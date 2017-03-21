@@ -1,7 +1,13 @@
 ﻿<?php
-
+include  'libraries/parsing.php';
 $client_id = '5930931';
 $scope = 'offline,message,groups,photos,wall';
+$parsing =new Parsing('');
+$str = phpQuery::newDocument($parsing->CurlQuery('https://www.google.ru/search?q=%D0%A4%D0%B8%D0%BC%D0%BE%D0%B7+%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BD%D0%BE%D0%B3%D0%BE+%D0%BC%D0%BE%D0%B7%D0%B3%D0%B0&source=lnms&tbm=isch'))->find('div#rg_s > div.ivg-i>.rg_meta')->eq(0);
+
+echo strripos($str,'"ou":');
+echo strripos($str,',"ow"');
+echo mb_strimwidth($str, strripos($str,'"ou":')+6, strripos($str,',"ow"')-strripos($str,'"ou":')-7);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>

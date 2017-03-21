@@ -18,5 +18,5 @@ $post_params = array(
 	"file1" => $img_src,
 );
 /*$api->UploadImageToAlbum($post_params,243751267,142367703);*/
-$parsing =new Parsing("http://wikireality.ru/w/index.php?title=%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%9C%D0%B5%D0%BC%D1%8B&pagefrom=%D0%A3%D0%BF%D0%BE%D1%80%D0%BE%D1%82%D1%8B%D0%B9#mw-pages");
-$parsing->ParseFirst();
+$parsing =new Parsing('');
+$parsing->ParseFirst("http://wikireality.ru/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%9C%D0%B5%D0%BC%D1%8B");
