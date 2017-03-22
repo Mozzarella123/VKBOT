@@ -3,12 +3,15 @@
     <words>
       <w>apigroup</w>
       <w>apiuser</w>
+      <w>arrayofjson</w>
       <w>ccfaf</w>
       <w>datapage</w>
       <w>findpages</w>
+      <w>firstimage</w>
       <w>imgparams</w>
       <w>lastmessage</w>
       <w>linkarray</w>
+      <w>singlejson</w>
       <w>tagname</w>
       <w>vkapi</w>
     </words>

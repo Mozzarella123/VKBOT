@@ -1,13 +1,17 @@
 ﻿<?php
-include  'libraries/parsing.php';
-$client_id = '5930931';
-$scope = 'offline,message,groups,photos,wall';
-$parsing =new Parsing('');
-$str = phpQuery::newDocument($parsing->CurlQuery('https://www.google.ru/search?q=%D0%A4%D0%B8%D0%BC%D0%BE%D0%B7+%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BD%D0%BE%D0%B3%D0%BE+%D0%BC%D0%BE%D0%B7%D0%B3%D0%B0&source=lnms&tbm=isch'))->find('div#rg_s > div.ivg-i>.rg_meta')->eq(0);
+include 'libraries/functions.php';
 
-echo strripos($str,'"ou":');
-echo strripos($str,',"ow"');
-echo mb_strimwidth($str, strripos($str,'"ou":')+6, strripos($str,',"ow"')-strripos($str,'"ou":')-7);
+
+$user_token = '885ccfaf7b19360f038350e419a0e488d208a45ad07be217e99b56b5ce69587b91d2791c86dcb2b8434a1';
+//Создаем объекты для работы с апи
+$apiuser = new UserMethods($user_token);
+$apiuser->saveImg('http://minionomaniya.ru/wp-content/uploads/2016/01/%D0%BC%D0%B8%D0%BD%D1%8C%D0%BE%D0%BD%D1%8B-%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB%D1%8B-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8.jpg','@/home/c/cw44342/botvk/public_html/images/');
+$parsing =new Parsing('');
+//$str = phpQuery::newDocument($parsing->CurlQuery('https://www.google.ru/search?q=%D0%A4%D0%B8%D0%BC%D0%BE%D0%B7+%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BD%D0%BE%D0%B3%D0%BE+%D0%BC%D0%BE%D0%B7%D0%B3%D0%B0&source=lnms&tbm=isch'))->find('div#rg_s > div.ivg-i>.rg_meta')->eq(0);
+$db = Database_Mysql::create('localhost', 'cw44342_botvk', '12345qwe')
+    ->setCharset('utf8')
+    ->setDatabaseName('cw44342_botvk');
+//$db->query('');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>

@@ -1,16 +1,8 @@
 <?php
 //Привет
-include 'simple_html_dom.php';
-include 'phpQuery-onefile.php';
+include 'libraries/functions.php';
 class Parsing
 {
-	private $site_url;
-	private $html;
-	public function __construct($site_url)
-	{
-		$this->site_url = $site_url;
-		$this->html = file_get_html($site_url);
-	}
 	public function CurlQuery($site_url)
 	{
 		$curl = curl_init($site_url);
@@ -23,33 +15,43 @@ class Parsing
 		curl_close( $curl );
 		return $request;
 	}
-	public function ParseFirstTag($tagname)
+	public function ParseFirstTag($tagname,$site_url)
 	{
-		$single = $this->html->find($tagname, 0);
-		$res = $single->plaintext;
-		$this->html->clear();
-		unset($this->html);
-		return $res;
+		$document = phpQuery::newDocument($this->CurlQuery($site_url));
+		return $document->find($tagname)->eq(0)->text();
 	}
 	public function ParseFirst($site_url)
 	{
 		$document = phpQuery::newDocument($this->CurlQuery($site_url));
 		$urls= $document->find("#mw-pages ul li a");
+		$arrayofjson = array();
 		foreach ($urls as $href)
 		{
-			$url = pq($href)->attr('href');
-			$single = phpQuery::newDocument($this->CurlQuery('http://wikireality.ru'.$url));
-			$header = $single->find('#firstHeading')->text();
-			$description = $single->find('#mw-content-text > p')->eq(0)->text();
-			$img_url = "https://www.google.ru/search?q=".urlencode($header)."&source=lnms&tbm=isch";
-			$abs_url = phpQuery::newDocument($this->CurlQuery($img_url))->find('div#rg_s > div.ivg-i>.rg_meta')->eq(0);
-			$img_src = mb_strimwidth($abs_url, strripos($abs_url,'"ou":')+6, strripos($abs_url,',"ow"')-strripos($abs_url,'"ou":')-7);
+			//Запоминаем каждую ссылку из массива ссылок на странице
+			$url = 'http://wikireality.ru'.pq($href)->attr('href');
+			$singlejson = array();
+			//Получаем страницу статьи
+			$header = $this->ParseFirstTag('#firstHeading',$url);
+			$description = $this->ParseFirstTag('#mw-content-text > p',$url);
+			//Получаем страницу поиска изображения по запросу
+			$search_url = "https://www.google.ru/search?q=".urlencode($header)."&source=lnms&tbm=isch";
+			//Получаем ссылку на первое изображение
+			$firstimage_url = $this->ParseFirstTag('div#rg_s > div.ivg-i>.rg_meta',$search_url);
+			$img_src = mb_strimwidth($firstimage_url, strripos($firstimage_url,'"ou":')+6, strripos($firstimage_url,',"ow"')-strripos($firstimage_url,'"ou":')-7);
+			//Создаем json одной страницы
+			$singlejson['title'] = $header;
+			$singlejson['description'] = $description;
+			$singlejson['image_url'] = $img_src;
+			$arrayofjson[] = $singlejson;
 			echo "<img src='$img_src'><br>";
-			echo $img_url.'<br>';
 			echo $header;
 			echo '<br>';
 			echo $description;
 			echo '<br><hr>';
 		}
+		$json = json_encode($arrayofjson);
+		$fp = fopen('/home/c/cw44342/botvk/public_html/php/json_parse.txt', "w+"); // Открываем файл в режиме записи
+		fwrite($fp, $json); // Запись в файл
+		//file_put_contents('/home/c/cw44342/botvk/public_html/php/libraries/json_parse.txt',$json);
 	}
 }

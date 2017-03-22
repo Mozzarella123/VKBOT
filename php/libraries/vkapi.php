@@ -43,6 +43,15 @@ class vkAPI
 }
 class UserMethods extends vkAPI
 {
+	public function saveImg($image_url,$image_path) {
+		$upload_dir = $image_path;
+		$name = 'image.jpg';
+		$file = file_get_contents($image_url);
+		$openedfile = fopen($upload_dir.$name, "w");
+		fwrite($openedfile, $file);
+		fclose($openedfile);
+		return $upload_dir.$name;
+	}
 	public function UploadImageToAlbum($images_array,$album_id,$group_id)
 	{
 		//Получаем url для загрузки

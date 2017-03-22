@@ -1,8 +1,6 @@
 
-<?php 
-include 'libraries/parsing.php';
-include 'libraries/vkapi.php';
-
+<?php
+include 'libraries/functions.php';
 
 if (!isset($_REQUEST)) { 
   return; 
@@ -21,9 +19,10 @@ $apigroup = new vkAPI($group_token);
 $apiuser = new UserMethods($user_token);
 
 //Подключаемся к бд
-$mysqli = new mysqli('localhost', 'cw44342_botvk', '12345qwe','cw44342_botvk');
-/* $res = $mysqli->query("SELECT MAX(id) FROM vocabulary");
- */
+$db = Database_Mysql::create('localhost', 'cw44342_botvk', '12345qwe')
+    ->setCharset('utf8')
+    ->setDatabaseName('cw44342_botvk');
+
 //Проверяем, что находится в поле "type" 
 switch ($data->type) { 
   //Если это уведомление для подтверждения адреса сервера...

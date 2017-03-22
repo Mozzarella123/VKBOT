@@ -8,20 +8,20 @@
 switch ($message)
 {
     case 'рандом слово':
-        $parser = new Parsing('http://genword.ru/generators/word/');
-        $message = $parser->ParseFirstTag('strong.out-text-1');
+        $parser = new Parsing();
+        $message = $parser->ParseFirstTag('strong.out-text-1','http://genword.ru/generators/word/');
         $send_params["message"] = $message;
         $apigroup->APIMethod('messages.send',$send_params);
         break;
     case 'рандом фраза':
-        $parser = new Parsing('http://genword.ru/generators/winged/');
-        $message = $parser->ParseFirstTag('strong.out-text-1');
+        $parser = new Parsing();
+        $message = $parser->ParseFirstTag('strong.out-text-1','http://genword.ru/generators/winged/');
         $send_params["message"] = $message;
         $apigroup->APIMethod('messages.send',$send_params);
         break;
     case 'рандом анекдот':
-        $parser = new Parsing('https://www.anekdot.ru/random/anekdot/');
-        $message = $parser->ParseFirstTag('div.topicbox div.text');
+        $parser = new Parsing();
+        $message = $parser->ParseFirstTag('div.topicbox div.text','https://www.anekdot.ru/random/anekdot/');
         $send_params["message"] = $message;
         $apigroup->APIMethod('messages.send',$send_params);
         break;
@@ -38,6 +38,15 @@ switch ($message)
         $send_params["message"] = $message;
         $apigroup->APIMethod('messages.send',$send_params);
         break;
+    case '+1':
+        $result = $db->query("SELECT attachments.photoid_vk FROM attachments,articles WHERE articles.attachment_id=attachments.attachment_id;");
+        $description = $db->query("SELECT description FROM articles WHERE article_id=1");
+        $message = $description->getOne();
+        $send_params["message"] = $message;
+        $send_params["attachment"] = $result->getOne();
+        $apigroup->APIMethod('messages.send',$send_params);
+        break;
+
     default :
         $message = 'какого чёрта ты мне пишешь?';
         $send_params["message"] = $message;
