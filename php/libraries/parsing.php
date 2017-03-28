@@ -22,6 +22,9 @@ class Parsing
 	}
 	public function ParseFirst($site_url)
 	{
+		$db = Database_Mysql::create('localhost', 'cw44342_botvk', '12345qwe')
+			->setCharset('utf8')
+			->setDatabaseName('cw44342_botvk');
 		$document = phpQuery::newDocument($this->CurlQuery($site_url));
 		$urls= $document->find("#mw-pages ul li a");
 		$arrayofjson = array();
@@ -38,6 +41,7 @@ class Parsing
 			//Получаем ссылку на первое изображение
 			$firstimage_url = $this->ParseFirstTag('div#rg_s > div.ivg-i>.rg_meta',$search_url);
 			$img_src = mb_strimwidth($firstimage_url, strripos($firstimage_url,'"ou":')+6, strripos($firstimage_url,',"ow"')-strripos($firstimage_url,'"ou":')-7);
+			
 			//Создаем json одной страницы
 			$singlejson['title'] = $header;
 			$singlejson['description'] = $description;

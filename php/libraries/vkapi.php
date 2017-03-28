@@ -52,7 +52,7 @@ class UserMethods extends vkAPI
 		fclose($openedfile);
 		return $upload_dir.$name;
 	}
-	public function UploadImageToAlbum($images_array,$album_id,$group_id)
+	public function UploadImageToAlbum($images_array,$album_id,$group_id,$caption="")
 	{
 		//Получаем url для загрузки
 		$upload_url = json_decode($this->APIMethod('photos.getUploadServer',"album_id=$album_id&group_id=$group_id&v=5.62"))->response->upload_url;
@@ -65,6 +65,7 @@ class UserMethods extends vkAPI
 			"photos_list" => stripslashes($result->photos_list),
 			"aid" => $result->aid,
 			"hash" => $result->hash,
+			"caption" => $caption
 		);
 		//Сохраняем на сервер
 		$this->APIMethod('photos.save',$imgparams);

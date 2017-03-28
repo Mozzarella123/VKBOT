@@ -11,7 +11,21 @@ $parsing =new Parsing('');
 $db = Database_Mysql::create('localhost', 'cw44342_botvk', '12345qwe')
     ->setCharset('utf8')
     ->setDatabaseName('cw44342_botvk');
+$search_phr = "+1";
+$search_phr = "%$search_phr%";
+
+$query = $db->query('SELECT article_id,description FROM articles WHERE description LIKE "?s" ',$search_phr);
+$row = $query->fetch_assoc();
+echo $row["article_id"];
+//echo $row["description"];
 //$db->query('');
+/*$db->query("INSERT INTO attachments (photoid_vk, url) VALUES ('?s','?s')","кек","rtr");
+$attachment_id = $db->getLastInsertId();
+$db->query("INSERT INTO articles (title, description) VALUES ('?s','?s')","kik","lol");
+$article_id = $db->getLastInsertId();
+$db->query("INSERT INTO attach_relation (attachment_id, article_id) VALUES ('?s','?s')",$attachment_id,$article_id);
+echo $article_id;
+echo $attachment_id*/
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>

@@ -38,8 +38,7 @@ switch ($data->type) {
     //затем с помощью users.get получаем данные об авторе 
     $user_info = json_decode(file_get_contents("https://api.vk.com/method/users.get?user_ids={$user_id}&v=5.0")); 
 //и извлекаем из ответа его имя 
-    $user_name = $user_info->response[0]->first_name; 
-    $message = mb_strtolower(json_decode($apigroup->APIMethod('messages.get','&count=1'))->response[1]->body);
+    $user_name = $user_info->response[0]->first_name;
 	
 	//работа с картинками
 /*   	$img_src = "@".dirname(__FILE__)."/s.jpg";
@@ -51,7 +50,7 @@ switch ($data->type) {
 		  'user_id' => $user_id, 
 		  'v' => '5.0'
     );  
-	$lastmessage = json_decode($apigroup->APIMethod('messages.get','count=1'))->response[1]->body;
+	$lastmessage = mb_strtolower(json_decode($apigroup->APIMethod('messages.get','&count=1'))->response[1]->body);
 	//Схемы ответов
 		include 'answers.php';
 
